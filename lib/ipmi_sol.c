@@ -1298,6 +1298,8 @@ ipmi_sol_deactivate(struct ipmi_intf * intf, int instance)
 		return -1;
 	}
 
+	printf("################# trace code Ipmi_sol.c 1, line:%d \n",__LINE__);
+	
 	memset(&req, 0, sizeof(req));
 	req.msg.netfn    = IPMI_NETFN_APP;
 	req.msg.cmd      = IPMI_DEACTIVATE_PAYLOAD;
@@ -1315,6 +1317,8 @@ ipmi_sol_deactivate(struct ipmi_intf * intf, int instance)
 	data[5] = 0;
 
 	rsp = intf->sendrecv(intf, &req);
+
+	printf("################# trace code Ipmi_sol.c 2, line:%d \n",__LINE__);
 
 	if (NULL != rsp) {
 		switch (rsp->ccode) {
@@ -1334,6 +1338,8 @@ ipmi_sol_deactivate(struct ipmi_intf * intf, int instance)
 	} else {
 		lprintf(LOG_ERR, "Error: No response de-activating SOL payload");
 	}
+
+	printf("################# trace code Ipmi_sol.c 3, line:%d \n",__LINE__);
 
 	return -1;
 }

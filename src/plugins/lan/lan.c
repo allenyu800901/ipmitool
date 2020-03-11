@@ -1904,6 +1904,8 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 	uint8_t msg_data[4];
 	uint32_t session_id = intf->session->session_id;
 
+	printf("################# trace code lan.c 1, line:%d \n",__LINE__);
+
 	if (intf->session->active == 0)
 		return -1;
 
@@ -1917,6 +1919,8 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 	req.msg.cmd		= 0x3c;
 	req.msg.data		= msg_data;
 	req.msg.data_len	= 4;
+
+	printf("################# trace code lan.c 2, line:%d \n",__LINE__);
 
 	rsp = intf->sendrecv(intf, &req);
 	if (rsp == NULL) {
@@ -1936,7 +1940,7 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 			val2str(rsp->ccode, completion_code_vals));
 		return -1;
 	}
-
+	printf("################# trace code lan.c 3, line:%d \n",__LINE__);
 	lprintf(LOG_DEBUG, "Closed Session %08lx\n", (long)session_id);
 
 	return 0;
