@@ -2811,6 +2811,8 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 	uint32_t bmc_session_lsbf;
 	uint8_t backupBridgePossible;
 
+	printf("################# ipmitool : Enter ipmi_close_session_cmd, line:%d \n",__LINE__);
+
 	if (intf->session == NULL
 			|| intf->session->v2_data.session_state != LANPLUS_STATE_ACTIVE)
 		return -1;
@@ -2833,10 +2835,18 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 	req.msg.data		= msg_data;
 	req.msg.data_len	= 4;
 
+	printf("################# ipmitool : Send netfn 0x3c to BMC - start, line:%d \n",__LINE__);
+
 	rsp = intf->sendrecv(intf, &req);
+
+	printf("################# ipmitool : Send netfn 0x3c to BMC - finish, line:%d \n",__LINE__);
+	
 	if (rsp == NULL) {
 		/* Looks like the session was closed */
 		lprintf(LOG_ERR, "Close Session command failed");
+		printf("################# ipmitool : Close Session command failed, line:%d \n",__LINE__);
+
+		
 		return -1;
 	}
 	if (verbose > 2)
@@ -2853,6 +2863,8 @@ ipmi_close_session_cmd(struct ipmi_intf * intf)
 			val2str(rsp->ccode, completion_code_vals));
 		return -1;
 	}
+
+	printf("################# ipmitool : Exit ipmi_close_session_cmd, line:%d \n",__LINE__);
 
 	lprintf(LOG_DEBUG, "Closed Session %08lx\n",
 		(long)intf->session->v2_data.bmc_id);

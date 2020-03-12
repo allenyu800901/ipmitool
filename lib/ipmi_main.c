@@ -1016,8 +1016,14 @@ ipmi_main(int argc, char ** argv,
 	ipmi_cleanup(ipmi_main_intf);
 
 	/* call interface close function if available */
-	if (ipmi_main_intf->opened > 0 && ipmi_main_intf->close != NULL)
-		ipmi_main_intf->close(ipmi_main_intf);
+//	if (ipmi_main_intf->opened > 0 && ipmi_main_intf->close != NULL)
+//		ipmi_main_intf->close(ipmi_main_intf);
+
+		if (ipmi_main_intf->opened > 0 && ipmi_main_intf->close != NULL)
+			{
+				printf("################# ipmitool : call the close session interface, line:%d \n",__LINE__);
+				ipmi_main_intf->close(ipmi_main_intf);
+			}
 
 	out_free:
 	log_halt();
